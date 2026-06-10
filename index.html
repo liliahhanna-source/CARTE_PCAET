@@ -657,7 +657,8 @@ footer{
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script>
 
 /* ===== FONCTIONNALITÉS GLOBALES PAGE ===== */
@@ -683,73 +684,218 @@ window.dispatchEvent(new Event('scroll'));
 
 /* ===== LOGIQUE INTERACTIVE DE LA CARTE ===== */
 document.addEventListener("DOMContentLoaded", function () {
- 
-  // Base de la carte sur Toulouse
+
+  // ============================================================
+  // ⚠️  SEULE PARTIE À MODIFIER : noms de tes colonnes CSV
+  // Copie exactement ce qui est écrit dans la ligne 1 de ton Excel
+  // ============================================================
+  const COLS = {
+    commune:      'Commune',
+    quartier:     'Quartier (si applicable)',
+    lat:          'Latitude',                    // colonne à ajouter dans ton Excel
+    lng:          'Longitude',                   // colonne à ajouter dans ton Excel
+    nomProjet:    'Nom du projet',
+    description:  'Description pour les habitants',
+    axePCAET:     'Axe PCAET',
+    typeTech:     'Type technique',
+    statut:       'Statut du projet',
+    cobenefiits:   'Co-bénéfices du projet',
+    concertation: 'Niveau de participation citoyenne',
+    dispositif:   'Dispositif de participation',
+    participants: 'Nombre de participants',
+    anecdote:     'Anecdote ou témoignage',
+    contact:      'Adresse de messagerie',
+  };
+  // ============================================================
+
   const map = L.map('map').setView([43.6045, 1.444], 11);
 
   L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    attribution: '&copy; OpenStreetMap &copy; CARTO',
     subdomains: 'abcd',
     maxZoom: 19
   }).addTo(map);
 
   let geojsonLayer;
-  let markersLayer = L.layerGroup().addTo(map); // Groupe pour gérer les marqueurs de points de localisation
+  let markersLayer = L.layerGroup().addTo(map);
+  let projetsListe = []; // sera rempli depuis le CSV
 
-  // 1. Base de données des projets AVEC COORDONNÉES GPS [Latitude, Longitude]
-  const projetsListe = [
-    {
-      id: "1",
-      commune: "Toulouse",
-      coordonnees: [43.5991, 1.4335], // Coordonnées géographiques des Allées Charles-de-Fitte
-      nomProjet: "Végétalisation Allées Charles-de-Fitte",
-      quartier: "Saint-Cyprien",
-      descriptionHabitants: "Plant de 30 arbres le long des allées.",
-      axePCAET: "Adaptation et Aménagement",
-      typeTechnique: "Végétalisation",
-      statut: "En cours",
-      coBenefices: ["Confort thermique", "Qualité de l'air", "Préservation de la ressource en eau"],
-      niveauParticipation: "Information/Sensibilisation",
-      dispositifParticipation: "Atelier de concertation; Balade citoyenne",
-      nbParticipants: "25",
-      anecdote: "Plantations participatives prévues à l'automne avec les comités de quartier.",
-      contact: "liliah.hanna@toulouse-metropole.fr"
-    },
-    {
-      id: "2",
-      commune: "Toulouse",
-      coordonnees: [43.5878, 1.4368], // Coordonnées géographiques de l'Île du Ramier
-      nomProjet: "Grand Parc Garonne - Île du Ramier",
-      quartier: "Île du Ramier",
-      descriptionHabitants: "Transformation des anciens halls d'exposition en grand parc urbain central.",
-      axePCAET: "Adaptation et Aménagement",
-      typeTechnique: "Renaturation",
-      statut: "En cours",
-      coBenefices: ["Confort thermique", "Lien social", "Préservation de la ressource en eau"],
-      niveauParticipation: "Co-construction",
-      dispositifParticipation: "Atelier citoyen",
-      nbParticipants: "120",
-      anecdote: "Plus de 500 arbres ont déjà été plantés cette saison !",
-      contact: "contact@toulouse-metropole.fr"
-    },
-    {
-      id: "3",
-      commune: "Blagnac",
-      coordonnees: [43.6361, 1.3914], // Coordonnées de Blagnac Centre
-      nomProjet: "Rénovation de l'éclairage public LED",
-      quartier: "Centre-ville",
-      descriptionHabitants: "Remplacement des luminaires énergivores par du LED intelligent avec régulation d'intensité.",
-      axePCAET: "Sobriété et Efficacité Énergétique",
-      typeTechnique: "Éclairage",
-      statut: "Terminé",
-      coBenefices: ["Énergie"],
-      niveauParticipation: "Information/Sensibilisation",
-      dispositifParticipation: "Réunion publique",
-      nbParticipants: "40",
-      anecdote: "Permet de réduire l'impact sur la faune nocturne le long de la Garonne.",
-      contact: "contact@blagnac.fr"
+  const filterConcertation = document.getElementById("filtre-concertation");
+  const filterCobenefit    = document.getElementById("filtre-cobenefit");
+  const mapStatus          = document.getElementById("map-status");
+
+  // Convertit une ligne du CSV en objet projet
+  function csvVersProjet(row) {
+    const lat = parseFloat(row[COLS.lat]);
+    const lng = parseFloat(row[COLS.lng]);
+
+    // Les cases à cocher Google Forms sont séparées par "; "
+    const cobenefsTexte  = row[COLS.cobenefiits] || '';
+    const cobenefsTableau = cobenefsTexte
+      .split(';')
+      .map(s => s.trim())
+      .filter(s => s !== '');
+
+    return {
+      id:                      row['Id'] || '',
+      commune:                 row[COLS.commune] || '',
+      coordonnees:             (isNaN(lat) || isNaN(lng)) ? null : [lat, lng],
+      nomProjet:               row[COLS.nomProjet] || '',
+      quartier:                row[COLS.quartier] || '',
+      descriptionHabitants:    row[COLS.description] || '',
+      axePCAET:                row[COLS.axePCAET] || '',
+      typeTechnique:           row[COLS.typeTech] || '',
+      statut:                  row[COLS.statut] || '',
+      coBenefices:             cobenefsTableau,
+      niveauParticipation:     row[COLS.concertation] || '',
+      dispositifParticipation: row[COLS.dispositif] || '',
+      nbParticipants:          row[COLS.participants] || '',
+      anecdote:                row[COLS.anecdote] || '',
+      contact:                 row[COLS.contact] || '',
+    };
+  }
+
+  // === Ces 4 fonctions sont identiques à ton code original ===
+
+  function evaluerFiltres(projet) {
+    const concertationActive = filterConcertation.value;
+    const cobenefitActif     = filterCobenefit.value;
+    const matchConcert = (concertationActive === "all" ||
+      projet.niveauParticipation.toLowerCase().includes(concertationActive.toLowerCase()));
+    const matchCobenef = (cobenefitActif === "all" ||
+      projet.coBenefices.some(cb => cb.toLowerCase().trim().includes(cobenefitActif.toLowerCase().trim())));
+    return matchConcert && matchCobenef;
+  }
+
+  function genererStructurePopup(p) {
+    const cleanStatut = p.statut.toLowerCase().replace(/ /g, '-');
+    const iconesMap = {
+      "confort thermique":                  "🌡️ Confort thermique",
+      "qualité de l'air":                   "🌬️ Qualité de l'air",
+      "préservation de la ressource en eau":"💧 Ressource en eau",
+      "ressource en eau":                   "💧 Ressource en eau",
+      "énergie":                            "⚡ Énergie",
+      "lien social":                        "🤝 Lien social"
+    };
+
+    let html = `<div class="popup-container">
+                  <div class="popup-header-block">
+                    <div class="popup-commune">${p.commune}</div>`;
+    if (p.quartier) {
+      html += `<div class="popup-quartier">📍 Secteur : ${p.quartier}</div>`;
     }
-  ];
+    html += `</div>
+      <div class="fiche-title-row">
+        <span class="projet-nom">${p.nomProjet}</span>
+        <span class="statut statut-${cleanStatut}">${p.statut}</span>
+      </div>
+      <div class="axe-pcaet-tag">Axe PCAET : ${p.axePCAET}</div>
+      <p class="projet-description">${p.descriptionHabitants}</p>
+      <div class="info-grid">
+        <div class="info-item"><b>Type Technique</b>${p.typeTechnique}</div>
+        <div class="info-item"><b>Niveau Participation</b>${p.niveauParticipation}</div>
+        <div class="info-item" style="grid-column:span 2"><b>Dispositif de Concertation</b>${p.dispositifParticipation}</div>
+        <div class="info-item"><b>Participants Mobilisés</b>👥 ${p.nbParticipants} personnes</div>
+        <div class="info-item"><b>Contact Référent</b><a href="mailto:${p.contact}" style="color:var(--vert-moyen);text-decoration:none;">Envoyer un e-mail</a></div>
+      </div>
+      <div class="cobenefit-tags">
+        ${p.coBenefices.filter(cb => cb.trim() !== "").map(cb => {
+          const key = cb.toLowerCase().trim();
+          return `<span class="cobenefit-tag">${iconesMap[key] || cb}</span>`;
+        }).join('')}
+      </div>`;
+
+    if (p.anecdote && p.anecdote.trim() !== "") {
+      html += `<div class="anecdote-bloc">
+                 <b>Témoignage / Anecdote collectée :</b><br>
+                 <em>« ${p.anecdote.trim()} »</em>
+               </div>`;
+    }
+    html += `</div>`;
+    return html;
+  }
+
+  function rafraichirPointsEtMarqueurs() {
+    markersLayer.clearLayers();
+    projetsListe.forEach(projet => {
+      if (evaluerFiltres(projet)) {
+        const iconePoint = L.icon({
+          iconUrl:    'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+          shadowUrl:  'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+          iconSize:   [25, 41],
+          iconAnchor: [12, 41],
+          popupAnchor:[1, -34],
+          shadowSize: [41, 41]
+        });
+        L.marker(projet.coordonnees, { icon: iconePoint })
+          .bindPopup(genererStructurePopup(projet), { className: 'popup-pcaet' })
+          .addTo(markersLayer);
+      }
+    });
+  }
+
+  function styleCommune() {
+    return { fillColor: '#bbf7d0', weight: 1.5, opacity: 0.8, color: '#ffffff', fillOpacity: 0.35 };
+  }
+
+  // === Chargement du CSV et du GeoJSON en parallèle ===
+  mapStatus.textContent = "Chargement de la carte et des projets...";
+
+  Promise.all([
+    fetch('communes.geojson').then(r => r.ok ? r.json() : null).catch(() => null),
+    fetch('projets.csv').then(r => r.ok ? r.text() : '').catch(() => '')
+  ])
+  .then(([geoData, csvTexte]) => {
+
+    // Lecture du CSV → conversion en objets projet
+    if (csvTexte) {
+      const { data } = Papa.parse(csvTexte, {
+        header: true,
+        skipEmptyLines: true,
+      });
+      projetsListe = data
+        .map(csvVersProjet)
+        .filter(p => p.coordonnees !== null); // ignore les lignes sans coordonnées GPS
+    }
+
+    // Décommente si les marqueurs n'apparaissent pas (debug) :
+    // console.log("Projets chargés :", projetsListe);
+
+    // Fond de carte communes
+    if (geoData) {
+      geojsonLayer = L.geoJSON(geoData, {
+        style: styleCommune,
+        onEachFeature: function(feature, layer) {
+          layer.on({
+            mouseover: e => e.target.setStyle({ fillOpacity: 0.5, weight: 2, color: '#ff5aa5' }),
+            mouseout:  e => geojsonLayer.resetStyle(e.target)
+          });
+        }
+      }).addTo(map);
+      map.fitBounds(geojsonLayer.getBounds());
+    }
+
+    rafraichirPointsEtMarqueurs();
+    mapStatus.textContent = `${projetsListe.length} projet(s) chargé(s). Cliquez sur un marqueur vert pour les détails.`;
+    setTimeout(() => { mapStatus.style.opacity = '0'; }, 4000);
+  });
+
+  filterConcertation.addEventListener("change", rafraichirPointsEtMarqueurs);
+  filterCobenefit.addEventListener("change", rafraichirPointsEtMarqueurs);
+
+  const legend = L.control({ position: 'bottomright' });
+  legend.onAdd = function () {
+    const div = L.DomUtil.create('div', 'legende-carte');
+    div.innerHTML = `
+      <h4>Légende</h4>
+      <div class="legende-item">
+        <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png" width="12" style="margin-right:5px;vertical-align:middle;">
+        Projet PCAET localisé
+      </div>`;
+    return div;
+  };
+  legend.addTo(map);
+});
 
   const filterConcertation = document.getElementById("filtre-concertation");
   const filterCobenefit = document.getElementById("filtre-cobenefit");
