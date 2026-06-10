@@ -177,7 +177,7 @@ header h1{
     opacity:0.9;
 }
 
-/* ===== CARTES ===== */
+/* ===== CARTES DU HAUT ===== */
 .cards{
     display:flex;
     justify-content:center;
@@ -210,24 +210,7 @@ header h1{
     padding:80px 20px;
 }
 
-.map-box{
-    margin:auto;
-    max-width:900px;
-    height:400px;
-    background-color:#dcdcdc;
-    border-radius:15px;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    box-shadow:0 10px 20px rgba(0,0,0,0.1);
-
-    font-size:20px;
-    color:#444;
-}
-
-/* ===== SECTION PROJETS ===== */
+/* ===== SECTION PROJETS DESCRIPTION ===== */
 .projects-section{
     padding:80px 20px;
     text-align:center;
@@ -322,17 +305,246 @@ footer{
 
 /* ===== RESPONSIVE ===== */
 @media screen and (max-width:768px){
-
     .hero h2{
         font-size:32px;
     }
-
     .cards,
     .project-list{
         flex-direction:column;
         align-items:center;
     }
+}
 
+
+/* ===== DESIGN ET STYLE DES POPUPS ET FILTRES DE LA CARTE ===== */
+:root {
+  --vert-fonce:   #14532d;
+  --vert-moyen:   #16a34a;
+  --vert-clair:   #bbf7d0;
+  --gris-fond:    #f3f4f6;
+  --gris-bord:    #e5e7eb;
+  --gris-texte:   #6b7280;
+  --noir:         #111827;
+  --blanc:        #ffffff;
+  --rayon:        12px;
+  --ombre:        0 4px 15px rgba(0,0,0,0.08);
+}
+
+#filtres-panel {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 1.2rem;
+  background: var(--blanc);
+  border-bottom: 1px solid var(--gris-bord);
+  border-radius: 15px 15px 0 0;
+  max-width: 950px;
+  margin: 0 auto;
+}
+
+.filtre-groupe {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.filtre-groupe label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gris-texte);
+}
+
+.filtre-groupe select {
+  font-size: 0.85rem;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--gris-bord);
+  border-radius: 8px;
+  background: var(--blanc);
+  cursor: pointer;
+  outline: none;
+}
+
+#map-status {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--vert-fonce);
+}
+
+/* --- Style de la légende --- */
+.legende-carte {
+  background: var(--blanc);
+  border-radius: 8px;
+  box-shadow: var(--ombre);
+  padding: 0.75rem 1rem;
+  font-size: 0.78rem;
+  line-height: 1.6;
+  color: var(--noir);
+}
+
+.legende-carte h4 {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--gris-texte);
+  margin-bottom: 0.4rem;
+}
+
+.legende-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.legende-item span {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+}
+
+/* --- Style de la boîte Popup Leaflet --- */
+.popup-pcaet .leaflet-popup-content-wrapper {
+  border-radius: var(--rayon);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+  padding: 0;
+  overflow: hidden;
+}
+
+.popup-pcaet .leaflet-popup-content {
+  margin: 0;
+  width: 380px !important;
+}
+
+.popup-container {
+  padding: 1.2rem;
+  color: var(--noir);
+  text-align: left;
+}
+
+.popup-header-block {
+  border-bottom: 2px solid var(--vert-moyen);
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.popup-commune {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--vert-fonce);
+  text-transform: uppercase;
+}
+
+.popup-quartier {
+  font-size: 0.85rem;
+  color: #ff7b00;
+  font-weight: 600;
+  margin-top: 0.1rem;
+}
+
+/* --- Contenu Interne de la Fiche --- */
+.fiche-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.projet-nom {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--noir);
+  line-height: 1.3;
+}
+
+.statut {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.statut-en-cours  { background: #dbeafe; color: #1d4ed8; }
+.statut-termine   { background: #dcfce7; color: #15803d; }
+.statut-planifie  { background: #fef9c3; color: #854d0e; }
+
+.axe-pcaet-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  background: #fff7ed;
+  color: #c2410c;
+  border: 1px solid #ffedd5;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+}
+
+.projet-description {
+  font-size: 0.88rem;
+  color: #374151;
+  line-height: 1.4;
+  margin-bottom: 0.8rem;
+  background: #f9fafb;
+  padding: 0.6rem;
+  border-radius: 6px;
+  border-left: 3px solid var(--vert-moyen);
+}
+
+/* Grille d'informations techniques et budgétaires */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+  background: #fafafa;
+  padding: 0.6rem;
+  border-radius: 6px;
+  margin-bottom: 0.8rem;
+  font-size: 0.8rem;
+  border: 1px solid var(--gris-bord);
+}
+
+.info-item b {
+  color: var(--gris-texte);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.1rem;
+}
+
+/* Badges Co-bénéfices */
+.cobenefit-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 0.8rem;
+}
+
+.cobenefit-tag {
+  font-size: 0.72rem;
+  background: #f0fdf4;
+  color: var(--vert-fonce);
+  border: 1px solid #bbf7d0;
+  border-radius: 999px;
+  padding: 0.15rem 0.4rem;
+}
+
+/* Bloc Anecdotes */
+.anecdote-bloc {
+  background: #fefce8;
+  border-left: 3px solid #eab308;
+  padding: 0.6rem 0.8rem;
+  border-radius: 0 6px 6px 0;
+  font-size: 0.8rem;
+  margin-top: 0.6rem;
+}
+
+@media (max-width: 600px) {
+  .popup-pcaet .leaflet-popup-content { width: 290px !important; }
+  .info-grid { grid-template-columns: 1fr; }
 }
 
 </style>
@@ -341,211 +553,374 @@ footer{
 
 <body>
 
-<!-- HEADER -->
 <header class="fade">
     <h1>Plan Climat Métropole</h1>
 </header>
 
-<!-- MENU -->
 <nav class="top-menu">
-
     <a href="#" class="active">Accueil</a>
-
     <span>|</span>
-
-    <a href="https://jeparticipe.metropole.toulouse.fr/" target="_blank">
-        Je participe
-    </a>
-
+    <a href="https://jeparticipe.metropole.toulouse.fr/" target="_blank">Je participe</a>
     <span>|</span>
-
-    <a href="#projets">
-        Projets
-    </a>
-
+    <a href="#projets">Projets</a>
     <span>|</span>
-
-    <a href="#contact">
-        Contact
-    </a>
-
-    <button class="dark-btn" onclick="toggleDarkMode()">
-        🌙
-    </button>
-
+    <a href="#contact">Contact</a>
+    <button class="dark-btn" onclick="toggleDarkMode()">🌙</button>
 </nav>
 
-<!-- HERO -->
 <section class="hero fade">
-
-   <div id="map"></div>
-
-<p id="map-status"></p>
-
-    <p>
-        Découvrez les projets écologiques et les actions
-        pour une métropole plus durable.
-    </p>
-
-    <a href="#carte" class="btn">
-        Découvrir la carte
-    </a>
-
+    <h2>Carte interactive des projets du Plan Climat</h2>
+    <p>Découvrez les actions écologiques et la participation citoyenne au cœur de votre métropole.</p>
+    <a href="#carte" class="btn">Découvrir la carte</a>
 </section>
 
-<!-- CARTES -->
 <section class="cards fade">
-
     <div class="card">
         <h3>🌳 Projet vert</h3>
-
-        <p>
-            Plantation d’arbres en ville.
-        </p>
+        <p>Plantation d’arbres et développement des îlots de fraîcheur urbains.</p>
     </div>
-
     <div class="card">
         <h3>🚲 Mobilité</h3>
-
-        <p>
-            Pistes cyclables et transports doux.
-        </p>
+        <p>Déploiement des infrastructures cyclables et transports doux.</p>
     </div>
-
     <div class="card">
         <h3>☀️ Énergie</h3>
+        <p>Soutien aux énergies renouvelables et rénovations thermiques.</p>
+    </div>
+</section>
 
-        <p>
-            Développement des énergies renouvelables.
-        </p>
+<section id="carte" class="map-section fade">
+    <h2>Carte interactive de la métropole</h2>
+   
+    <div id="filtres-panel">
+      <div class="filtre-groupe">
+        <label for="filtre-concertation">Participation citoyenne :</label>
+        <select id="filtre-concertation">
+          <option value="all">Tous les niveaux</option>
+          <option value="Information/Sensibilisation">Information / Sensibilisation</option>
+          <option value="Consultation">Consultation</option>
+          <option value="Co-construction">Co-construction</option>
+        </select>
+      </div>
+
+      <div class="filtre-groupe">
+        <label for="filtre-cobenefit">Co-bénéfice principal :</label>
+        <select id="filtre-cobenefit">
+          <option value="all">Tous les co-bénéfices</option>
+          <option value="Confort thermique">🌡️ Confort thermique</option>
+          <option value="Qualité de l'air">🌬️ Qualité de l'air</option>
+          <option value="ressource en eau">💧 Ressource en eau</option>
+          <option value="Énergie">⚡ Énergie</option>
+          <option value="Lien social">🤝 Lien social</option>
+        </select>
+      </div>
     </div>
 
+    <div id="map" style="height:650px; max-width:950px; margin:0 auto; border-radius:0 0 15px 15px; box-shadow:0 10px 20px rgba(0,0,0,0.1);"></div>
+    <p id="map-status">Initialisation de la carte...</p>
 </section>
 
-<!-- SECTION CARTE -->
-<section id="carte" class="map-section fade">
-
-    <h2>Carte interactive</h2>
-
-    <div class="map-box">
-    <a href="carte.html" class="btn">
-        Ouvrir la carte interactive
-    </a>
-</div>
-
-</section>
-
-<!-- SECTION PROJETS -->
 <section id="projets" class="projects-section fade">
-
-    <h2>Les projets</h2>
-
+    <h2>Les projets phares</h2>
     <div class="project-list">
-
         <div class="project-box">
             <h3>🌱 Projet 1</h3>
-
-            <p>
-                Création d’espaces verts dans la métropole.
-            </p>
+            <p>Création d’espaces verts et végétalisation urbaine.</p>
         </div>
-
         <div class="project-box">
             <h3>🚆 Projet 2</h3>
-
-            <p>
-                Développement des transports écologiques.
-            </p>
+            <p>Développement des liaisons douces intercommunales.</p>
         </div>
-
         <div class="project-box">
             <h3>🔋 Projet 3</h3>
-
-            <p>
-                Installation de panneaux solaires.
-            </p>
+            <p>Installation de centrales photovoltaïques en toiture.</p>
         </div>
-
     </div>
-
 </section>
 
-<!-- CONTACT -->
 <section id="contact" class="contact-section fade">
-
     <h2>Coordonnées</h2>
-
     <div class="contact-box">
-
         <h3>Plan Climat Métropole</h3>
-
-        <p>
-            📍 Adresse : 0 Rue exemple, Toulouse
-        </p>
-
-        <p>
-            📞 Téléphone : 00 00 00 00 00
-        </p>
-
-        <p>
-            📧 Email : contact@metropole-gmail.fr
-        </p>
-
-        <p>
-            🕒 Horaires :
-            Lundi - Vendredi : 00 à 00
-        </p>
-
+        <p>📍 Adresse : 6 Rue René Leduc, Toulouse</p>
+        <p>📞 Téléphone : 05 81 91 72 00</p>
+        <p>📧 Email : contact@metropole.toulouse.fr</p>
+        <p>🕒 Horaires : Lundi - Vendredi : 8h30 à 17h00</p>
     </div>
-
 </section>
 
-<!-- FOOTER -->
 <footer>
-    © 2026 - Métropole Durable
+    © 2026 - Métropole Durable & Résiliente
 </footer>
 
-<!-- BOUTON RETOUR HAUT -->
-<button class="top-btn" onclick="scrollToTop()">
-    ↑
-</button>
+<button class="top-btn" onclick="scrollToTop()">↑</button>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
 
-/* ===== MODE SOMBRE ===== */
+/* ===== FONCTIONNALITÉS GLOBALES PAGE ===== */
 function toggleDarkMode(){
     document.body.classList.toggle("dark-mode");
 }
 
-/* ===== RETOUR EN HAUT ===== */
 function scrollToTop(){
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
+    window.scrollTo({ top:0, behavior:"smooth" });
 }
 
-/* ===== ANIMATION AU SCROLL ===== */
 const faders = document.querySelectorAll('.fade');
-
 window.addEventListener('scroll', () => {
-
     faders.forEach(fade => {
-
         const top = fade.getBoundingClientRect().top;
-
         if(top < window.innerHeight - 100){
             fade.classList.add('visible');
         }
-
     });
-
 });
-
-/* ===== CHARGE DIRECTEMENT LE HERO ===== */
 window.dispatchEvent(new Event('scroll'));
 
-</script>
 
+/* ===== LOGIQUE INTERACTIVE DE LA CARTE ===== */
+document.addEventListener("DOMContentLoaded", function () {
+ 
+  // Base de la carte sur Toulouse
+  const map = L.map('map').setView([43.6045, 1.444], 11);
+
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    subdomains: 'abcd',
+    maxZoom: 19
+  }).addTo(map);
+
+  let geojsonLayer;
+  let markersLayer = L.layerGroup().addTo(map); // Groupe pour gérer les marqueurs de points de localisation
+
+  // 1. Base de données des projets AVEC COORDONNÉES GPS [Latitude, Longitude]
+  const projetsListe = [
+    {
+      id: "1",
+      commune: "Toulouse",
+      coordonnees: [43.5991, 1.4335], // Coordonnées géographiques des Allées Charles-de-Fitte
+      nomProjet: "Végétalisation Allées Charles-de-Fitte",
+      quartier: "Saint-Cyprien",
+      descriptionHabitants: "Plant de 30 arbres le long des allées.",
+      axePCAET: "Adaptation et Aménagement",
+      typeTechnique: "Végétalisation",
+      statut: "En cours",
+      coBenefices: ["Confort thermique", "Qualité de l'air", "Préservation de la ressource en eau"],
+      niveauParticipation: "Information/Sensibilisation",
+      dispositifParticipation: "Atelier de concertation; Balade citoyenne",
+      nbParticipants: "25",
+      anecdote: "Plantations participatives prévues à l'automne avec les comités de quartier.",
+      contact: "liliah.hanna@toulouse-metropole.fr"
+    },
+    {
+      id: "2",
+      commune: "Toulouse",
+      coordonnees: [43.5878, 1.4368], // Coordonnées géographiques de l'Île du Ramier
+      nomProjet: "Grand Parc Garonne - Île du Ramier",
+      quartier: "Île du Ramier",
+      descriptionHabitants: "Transformation des anciens halls d'exposition en grand parc urbain central.",
+      axePCAET: "Adaptation et Aménagement",
+      typeTechnique: "Renaturation",
+      statut: "En cours",
+      coBenefices: ["Confort thermique", "Lien social", "Préservation de la ressource en eau"],
+      niveauParticipation: "Co-construction",
+      dispositifParticipation: "Atelier citoyen",
+      nbParticipants: "120",
+      anecdote: "Plus de 500 arbres ont déjà été plantés cette saison !",
+      contact: "contact@toulouse-metropole.fr"
+    },
+    {
+      id: "3",
+      commune: "Blagnac",
+      coordonnees: [43.6361, 1.3914], // Coordonnées de Blagnac Centre
+      nomProjet: "Rénovation de l'éclairage public LED",
+      quartier: "Centre-ville",
+      descriptionHabitants: "Remplacement des luminaires énergivores par du LED intelligent avec régulation d'intensité.",
+      axePCAET: "Sobriété et Efficacité Énergétique",
+      typeTechnique: "Éclairage",
+      statut: "Terminé",
+      coBenefices: ["Énergie"],
+      niveauParticipation: "Information/Sensibilisation",
+      dispositifParticipation: "Réunion publique",
+      nbParticipants: "40",
+      anecdote: "Permet de réduire l'impact sur la faune nocturne le long de la Garonne.",
+      contact: "contact@blagnac.fr"
+    }
+  ];
+
+  const filterConcertation = document.getElementById("filtre-concertation");
+  const filterCobenefit = document.getElementById("filtre-cobenefit");
+  const mapStatus = document.getElementById("map-status");
+
+  // Vérification des filtres
+  function evaluerFiltres(projet) {
+    const concertationActive = filterConcertation.value;
+    const cobenefitActif = filterCobenefit.value;
+
+    const matchConcert = (concertationActive === "all" ||
+                         projet.niveauParticipation.toLowerCase().includes(concertationActive.toLowerCase()));
+                         
+    const matchCobenef = (cobenefitActif === "all" ||
+                         projet.coBenefices.some(cb => cb.toLowerCase().trim().includes(cobenefitActif.toLowerCase().trim())));
+
+    return matchConcert && matchCobenef;
+  }
+
+  // 2. Générateur de la boîte d'information complète (Popup) au clic sur un marqueur point
+  function genererStructurePopup(p) {
+    // Correspondance CSS du statut
+    const cleanStatut = p.statut.toLowerCase().replace(' ', '-');
+
+    // Dictionnaire d'icônes pour les co-bénéfices
+    const iconesMap = {
+      "confort thermique": "🌡️ Confort thermique",
+      "qualité de l'air": "🌬️ Qualité de l'air",
+      "préservation de la ressource en eau": "💧 Ressource en eau",
+      "énergie": "⚡ Énergie",
+      "lien social": "🤝 Lien social"
+    };
+
+    let html = `<div class="popup-container">
+                  <div class="popup-header-block">
+                    <div class="popup-commune">${p.commune}</div>`;
+    if (p.quartier) {
+      html += `     <div class="popup-quartier">📍 Secteur : ${p.quartier}</div>`;
+    }
+    html += `     </div>`; // Fin header block
+
+    html += `
+      <div class="fiche-title-row">
+        <span class="projet-nom">${p.nomProjet}</span>
+        <span class="statut statut-${cleanStatut}">${p.statut}</span>
+      </div>
+     
+      <div class="axe-pcaet-tag">Axe PCAET : ${p.axePCAET}</div>
+     
+      <p class="projet-description">${p.descriptionHabitants}</p>
+     
+      <div class="info-grid">
+        <div class="info-item"><b>Type Technique</b>${p.typeTechnique}</div>
+        <div class="info-item"><b>Niveau Participation</b>${p.niveauParticipation}</div>
+        <div class="info-item" style="grid-column: span 2;"><b>Dispositif de Concertation</b>${p.dispositifParticipation}</div>
+        <div class="info-item"><b>Participants Mobilisés</b>👥 ${p.nbParticipants} personnes</div>
+        <div class="info-item"><b>Contact Référent</b><a href="mailto:${p.contact}" style="color:var(--vert-moyen); text-decoration:none;">Envoyer un e-mail</a></div>
+      </div>
+
+      <div class="cobenefit-tags">
+        ${p.coBenefices.filter(cb => cb.trim() !== "").map(cb => {
+          const key = cb.toLowerCase().trim();
+          return `<span class="cobenefit-tag">${iconesMap[key] || cb}</span>`;
+        }).join('')}
+      </div>
+    `;
+
+    if (p.anecdote && p.anecdote.trim() !== "") {
+      html += `<div class="anecdote-bloc">
+                <b>Témoignage / Anecdote collectée :</b><br>
+                <em>« ${p.anecdote.trim()} »</em>
+              </div>`;
+    }
+
+    html += `</div>`;
+    return html;
+  }
+
+  // 3. Fonction pour rafraîchir et poser les marqueurs de points de localisation selon les filtres
+  function rafraichirPointsEtMarqueurs() {
+    // On efface les anciens points avant de recalculer
+    markersLayer.clearLayers();
+
+    projetsListe.forEach(projet => {
+      // Si le projet correspond aux filtres choisis, on crée son point de localisation
+      if (evaluerFiltres(projet)) {
+       
+        // Icône personnalisée de couleur vert/climat pour le marqueur (Point de localisation)
+        const iconePoint = L.icon({
+          iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+          shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+          iconSize: [25, 41],
+          iconAnchor: [12, 41],
+          popupAnchor: [1, -34],
+          shadowSize: [41, 41]
+        });
+
+        // Création du marqueur à sa coordonnée GPS avec sa popup d'informations complètes
+        const marqueur = L.marker(projet.coordonnees, { icon: iconePoint })
+          .bindPopup(genererStructurePopup(projet), { className: 'popup-pcaet' });
+       
+        markersLayer.addLayer(marqueur);
+      }
+    });
+  }
+
+  // 4. Style de base sobre pour les contours géographiques des communes (en arrière-plan)
+  function styleCommune() {
+    return {
+      fillColor: '#bbf7d0', // Fond vert très clair transparent uniforme
+      weight: 1.5,
+      opacity: 0.8,
+      color: '#ffffff',
+      fillOpacity: 0.35
+    };
+  }
+
+  // 5. Importation du fichier communes.geojson pour l'arrière-plan
+  mapStatus.textContent = "Chargement du fond de carte et des points géographiques...";
+ 
+  fetch("communes.geojson")
+    .then(res => {
+      if (!res.ok) throw new Error();
+      return res.json();
+    })
+    .then(data => {
+      geojsonLayer = L.geoJSON(data, {
+        style: styleCommune,
+        onEachFeature: function(feature, layer) {
+          // Effet de surbrillance légère au survol des communes
+          layer.on({
+            mouseover: function (e) { e.target.setStyle({ fillOpacity: 0.5, weight: 2, color: '#ff5aa5' }); },
+            mouseout: function (e) { geojsonLayer.resetStyle(e.target); }
+          });
+        }
+      }).addTo(map);
+
+      // Ajuste la vue et affiche les premiers marqueurs
+      map.fitBounds(geojsonLayer.getBounds());
+      rafraichirPointsEtMarqueurs();
+
+      mapStatus.textContent = "Carte prête. Cliquez sur un point de localisation vert pour afficher ses détails.";
+      setTimeout(() => { mapStatus.style.opacity = '0'; }, 4000);
+    })
+    .catch(() => {
+      mapStatus.textContent = "Alerte : Fichier 'communes.geojson' manquant, affichage des points uniquement.";
+      mapStatus.style.color = "#ff7b00";
+      rafraichirPointsEtMarqueurs();
+    });
+
+  // Écouteurs pour mettre à jour les points de localisation dès qu'on change un filtre
+  filterConcertation.addEventListener("change", rafraichirPointsEtMarqueurs);
+  filterCobenefit.addEventListener("change", rafraichirPointsEtMarqueurs);
+
+  // Ajout de la légende descriptive
+  const legend = L.control({ position: 'bottomright' });
+  legend.onAdd = function () {
+    const div = L.DomUtil.create('div', 'legende-carte');
+    div.innerHTML = `
+      <h4>Légende</h4>
+      <div class="legende-item">
+        <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png" width="12" style="margin-right:5px; vertical-align:middle;">
+        Projet PCAET localisé
+      </div>
+    `;
+    return div;
+  };
+  legend.addTo(map);
+});
+
+</script>
 </body>
+
 </html>
