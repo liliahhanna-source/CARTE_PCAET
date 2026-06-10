@@ -1,0 +1,380 @@
+/* ============================================================
+   CARTE INTERACTIVE — PLAN CLIMAT MÉTROPOLE
+   style-carte.css
+   ============================================================ */
+
+/* --- Typographie & base --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Syne:wght@700&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --vert-fonce:   #14532d;
+  --vert-moyen:   #16a34a;
+  --vert-clair:   #bbf7d0;
+  --gris-fond:    #f3f4f6;
+  --gris-bord:    #e5e7eb;
+  --gris-texte:   #6b7280;
+  --noir:         #111827;
+  --blanc:        #ffffff;
+  --bleu:         #2563eb;
+  --orange:       #d97706;
+  --rayon:        8px;
+  --ombre:        0 2px 12px rgba(0,0,0,0.10);
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: var(--noir);
+  background: var(--gris-fond);
+}
+
+/* --- Header --- */
+.header-carte {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--vert-fonce);
+  color: var(--blanc);
+  box-shadow: var(--ombre);
+  position: relative;
+  z-index: 1000;
+}
+
+.header-carte h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--blanc);
+}
+
+.retour-accueil {
+  color: var(--vert-clair);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+
+.retour-accueil:hover {
+  opacity: 0.75;
+}
+
+/* --- Panneau de filtres --- */
+#filtres-panel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--blanc);
+  border-bottom: 1px solid var(--gris-bord);
+  position: relative;
+  z-index: 900;
+}
+
+.filtre-groupe {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.filtre-groupe label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--gris-texte);
+  white-space: nowrap;
+}
+
+.filtre-groupe select {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  padding: 0.35rem 0.65rem;
+  border: 1px solid var(--gris-bord);
+  border-radius: var(--rayon);
+  background: var(--blanc);
+  color: var(--noir);
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.filtre-groupe select:focus {
+  border-color: var(--vert-moyen);
+}
+
+/* --- Carte Leaflet --- */
+#map {
+  width: 100%;
+  height: calc(100vh - 110px);
+  z-index: 1;
+}
+
+/* --- Message de statut --- */
+#map-status {
+  position: fixed;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(20, 83, 45, 0.88);
+  color: var(--blanc);
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  z-index: 2000;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* --- Légende --- */
+.legende-carte {
+  background: var(--blanc);
+  border-radius: var(--rayon);
+  box-shadow: var(--ombre);
+  padding: 0.75rem 1rem;
+  font-size: 0.78rem;
+  line-height: 1.6;
+  min-width: 160px;
+}
+
+.legende-carte h4 {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--gris-texte);
+  margin-bottom: 0.4rem;
+}
+
+.legende-carte hr {
+  border: none;
+  border-top: 1px solid var(--gris-bord);
+  margin: 0.6rem 0;
+}
+
+.legende-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.2rem;
+}
+
+.legende-item span {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+/* --- Popup --- */
+.popup-pcaet .leaflet-popup-content-wrapper {
+  border-radius: var(--rayon);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+  padding: 0;
+  overflow: hidden;
+}
+
+.popup-pcaet .leaflet-popup-content {
+  margin: 0;
+  width: 340px !important;
+}
+
+.popup-pcaet .leaflet-popup-tip {
+  background: var(--blanc);
+}
+
+.popup-container {
+  padding: 1rem 1.1rem 1.1rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.popup-commune {
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--vert-fonce);
+  margin-bottom: 0.2rem;
+}
+
+.popup-count {
+  font-size: 0.78rem;
+  color: var(--gris-texte);
+  margin-bottom: 0.6rem;
+}
+
+.popup-vide {
+  font-size: 0.82rem;
+  color: var(--gris-texte);
+  font-style: italic;
+}
+
+/* --- Navigation entre projets --- */
+.nav-projets {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.nav-btn {
+  background: var(--gris-fond);
+  border: 1px solid var(--gris-bord);
+  border-radius: var(--rayon);
+  padding: 0.2rem 0.55rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.nav-btn:hover {
+  background: var(--vert-clair);
+}
+
+#nav-label {
+  font-size: 0.78rem;
+  color: var(--gris-texte);
+}
+
+/* --- Fiche projet --- */
+.fiche-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+
+.projet-nom {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--noir);
+  line-height: 1.3;
+}
+
+.statut {
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.statut-en-cours      { background: #dbeafe; color: #1d4ed8; }
+.statut-termine,
+.statut-terminé       { background: #dcfce7; color: #15803d; }
+.statut-planifie,
+.statut-planifié      { background: #fef9c3; color: #854d0e; }
+
+.projet-description {
+  font-size: 0.82rem;
+  color: #374151;
+  line-height: 1.5;
+  margin-bottom: 0.6rem;
+}
+
+/* --- Co-bénéfices --- */
+.cobenefit-section {
+  margin-bottom: 0.6rem;
+}
+
+.section-titre {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--gris-texte);
+  margin-bottom: 0.3rem;
+}
+
+.cobenefit-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.cobenefit-tag {
+  font-size: 0.75rem;
+  background: #f0fdf4;
+  color: var(--vert-fonce);
+  border: 1px solid #bbf7d0;
+  border-radius: 999px;
+  padding: 0.15rem 0.5rem;
+}
+
+/* --- Concertation --- */
+.concertation-badge {
+  border-left: 3px solid var(--vert-moyen);
+  padding-left: 0.6rem;
+  margin-bottom: 0.6rem;
+}
+
+.concertation-niveau {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--noir);
+  margin-bottom: 0.2rem;
+}
+
+.concertation-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.detail-concertation {
+  font-size: 0.73rem;
+  color: var(--gris-texte);
+  background: var(--gris-fond);
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+}
+
+/* --- Anecdote --- */
+.anecdote-bloc {
+  background: #fafaf9;
+  border-radius: var(--rayon);
+  padding: 0.5rem 0.7rem;
+  margin-top: 0.4rem;
+}
+
+.anecdote-texte {
+  font-size: 0.8rem;
+  font-style: italic;
+  color: #4b5563;
+  line-height: 1.5;
+}
+
+/* --- Responsive mobile --- */
+@media (max-width: 600px) {
+  .header-carte {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+    padding: 0.6rem 1rem;
+  }
+
+  #filtres-panel {
+    flex-direction: column;
+    padding: 0.6rem 1rem;
+  }
+
+  .popup-pcaet .leaflet-popup-content {
+    width: 280px !important;
+  }
+
+  #map {
+    height: calc(100vh - 160px);
+  }
+}
