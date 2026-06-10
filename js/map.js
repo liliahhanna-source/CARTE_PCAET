@@ -1,7 +1,5 @@
-const GOOGLE_SHEETS_URL = 'data/projets.csv';
-
-// Champ du GeoJSON
-const GEOJSON_NOM_FIELD = 'libelle';
+const GOOGLE_SHEETS_URL = 'projets.csv';
+const GEOJSON_PATH = 'js/communes.geojson';
 
 // Colonnes du CSV
 const COL = {
