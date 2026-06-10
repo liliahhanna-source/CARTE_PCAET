@@ -4,566 +4,129 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Plan Climat de la Métropole</title>
 
 <style>
-
 /* ===== SCROLL ===== */
-html{
-    scroll-behavior:smooth;
-}
+html{ scroll-behavior:smooth; }
 
 /* ===== BODY ===== */
-body{
-    margin:0;
-    font-family:Arial,sans-serif;
-    background-color:#f8f4ee;
-    color:black;
-    transition:0.4s;
-}
+body{ margin:0; font-family:Arial,sans-serif; background-color:#f8f4ee; color:black; transition:0.4s; }
 
 /* ===== MODE SOMBRE ===== */
-body.dark-mode{
-    background:#1e1e1e;
-    color:white;
-}
-
-body.dark-mode .hero,
-body.dark-mode .projects-section{
-    background:#2a2a2a;
-}
-
-body.dark-mode .card,
-body.dark-mode .project-box,
-body.dark-mode .contact-box{
-    background:#333;
-    color:white;
-}
-
-body.dark-mode .map-box{
-    background:#444;
-    color:white;
-}
+body.dark-mode{ background:#1e1e1e; color:white; }
+body.dark-mode .hero, body.dark-mode .projects-section{ background:#2a2a2a; }
+body.dark-mode .card, body.dark-mode .project-box, body.dark-mode .contact-box{ background:#333; color:white; }
+body.dark-mode .map-box{ background:#444; color:white; }
 
 /* ===== ANIMATION SCROLL ===== */
-.fade{
-    opacity:0;
-    transform:translateY(40px);
-    transition:1s;
-}
-
-.fade.visible{
-    opacity:1;
-    transform:translateY(0);
-}
+.fade{ opacity:0; transform:translateY(40px); transition:1s; }
+.fade.visible{ opacity:1; transform:translateY(0); }
 
 /* ===== HEADER ===== */
-header{
-    background-color:#ff7b00;
-    padding:20px;
-    text-align:center;
-    color:white;
-    box-shadow:0 4px 10px rgba(0,0,0,0.1);
-}
-
-header h1{
-    margin:0;
-    font-size:24px;
-}
+header{ background-color:#ff7b00; padding:20px; text-align:center; color:white; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
+header h1{ margin:0; font-size:24px; }
 
 /* ===== MENU FIXE ===== */
-.top-menu{
-    background-color:#ffa07a;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:15px;
-    padding:15px;
-    font-weight:bold;
-    flex-wrap:wrap;
-
-    position:sticky;
-    top:0;
-    z-index:1000;
-}
-
-/* ===== LIENS ===== */
-.top-menu a{
-    color:black;
-    text-decoration:none;
-    padding:5px 10px;
-    transition:0.3s;
-}
-
-.top-menu a:hover{
-    color:#ff5aa5;
-}
-
-.top-menu a.active{
-    color:#ff5aa5;
-}
-
-.top-menu span{
-    color:rgba(0,0,0,0.4);
-}
+.top-menu{ background-color:#ffa07a; display:flex; justify-content:center; align-items:center; gap:15px; padding:15px; font-weight:bold; flex-wrap:wrap; position:sticky; top:0; z-index:1000; }
+.top-menu a{ color:black; text-decoration:none; padding:5px 10px; transition:0.3s; }
+.top-menu a:hover{ color:#ff5aa5; }
+.top-menu a.active{ color:#ff5aa5; }
+.top-menu span{ color:rgba(0,0,0,0.4); }
 
 /* ===== BOUTON MODE SOMBRE ===== */
-.dark-btn{
-    border:none;
-    background:#ff5aa5;
-    color:white;
-    padding:10px 15px;
-    border-radius:10px;
-    cursor:pointer;
-    font-weight:bold;
-    transition:0.3s;
-}
-
-.dark-btn:hover{
-    transform:scale(1.05);
-}
+.dark-btn{ border:none; background:#ff5aa5; color:white; padding:10px 15px; border-radius:10px; cursor:pointer; font-weight:bold; transition:0.3s; }
+.dark-btn:hover{ transform:scale(1.05); }
 
 /* ===== HERO ===== */
-.hero{
-    text-align:center;
-    padding:80px 20px 40px;
-    background-color:#FAF0E6;
-    transition:0.4s;
-}
-
-.hero h2{
-    font-size:45px;
-    margin-bottom:20px;
-}
-
-.hero p{
-    font-size:18px;
-    max-width:700px;
-    margin:auto;
-    line-height:1.6;
-}
+.hero{ text-align:center; padding:80px 20px 40px; background-color:#FAF0E6; transition:0.4s; }
+.hero h2{ font-size:45px; margin-bottom:20px; }
+.hero p{ font-size:18px; max-width:700px; margin:auto; line-height:1.6; }
 
 /* ===== BOUTON ===== */
-.btn{
-    display:inline-block;
-    margin-top:35px;
-    padding:15px 35px;
-    background-color:#ff5aa5;
-    color:white;
-    text-decoration:none;
-    border-radius:12px;
-    font-weight:bold;
-    transition:0.3s;
-
-    animation:pulse 2s infinite;
-}
-
-@keyframes pulse{
-    0%{
-        transform:scale(1);
-    }
-
-    50%{
-        transform:scale(1.05);
-    }
-
-    100%{
-        transform:scale(1);
-    }
-}
-
-.btn:hover{
-    opacity:0.9;
-}
+.btn{ display:inline-block; margin-top:35px; padding:15px 35px; background-color:#ff5aa5; color:white; text-decoration:none; border-radius:12px; font-weight:bold; transition:0.3s; animation:pulse 2s infinite; }
+@keyframes pulse{ 0%{ transform:scale(1); } 50%{ transform:scale(1.05); } 100%{ transform:scale(1); } }
+.btn:hover{ opacity:0.9; }
 
 /* ===== CARTES DU HAUT ===== */
-.cards{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:25px;
-    padding:50px 20px;
-}
-
-.card{
-    width:250px;
-    background:white;
-    border-radius:15px;
-    padding:20px;
-    box-shadow:0 10px 20px rgba(0,0,0,0.1);
-    transition:0.4s;
-}
-
-.card:hover{
-    transform:translateY(-15px) scale(1.03);
-    box-shadow:0 15px 25px rgba(0,0,0,0.2);
-}
-
-.card h3{
-    color:#ff7b00;
-}
+.cards{ display:flex; justify-content:center; flex-wrap:wrap; gap:25px; padding:50px 20px; }
+.card{ width:250px; background:white; border-radius:15px; padding:20px; box-shadow:0 10px 20px rgba(0,0,0,0.1); transition:0.4s; }
+.card:hover{ transform:translateY(-15px) scale(1.03); box-shadow:0 15px 25px rgba(0,0,0,0.2); }
+.card h3{ color:#ff7b00; }
 
 /* ===== SECTION CARTE ===== */
-.map-section{
-    text-align:center;
-    padding:80px 20px;
-}
+.map-section{ text-align:center; padding:80px 20px; }
 
 /* ===== SECTION PROJETS DESCRIPTION ===== */
-.projects-section{
-    padding:80px 20px;
-    text-align:center;
-    background:white;
-    transition:0.4s;
-}
-
-.projects-section h2{
-    margin-bottom:40px;
-}
-
-.project-list{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:25px;
-}
-
-.project-box{
-    width:280px;
-    background:#f8f4ee;
-    padding:25px;
-    border-radius:15px;
-    box-shadow:0 10px 20px rgba(0,0,0,0.08);
-    transition:0.4s;
-}
-
-.project-box:hover{
-    transform:translateY(-15px) scale(1.03);
-}
-
-.project-box h3{
-    color:#ff5aa5;
-}
+.projects-section{ padding:80px 20px; text-align:center; background:white; transition:0.4s; }
+.projects-section h2{ margin-bottom:40px; }
+.project-list{ display:flex; justify-content:center; flex-wrap:wrap; gap:25px; }
+.project-box{ width:280px; background:#f8f4ee; padding:25px; border-radius:15px; box-shadow:0 10px 20px rgba(0,0,0,0.08); transition:0.4s; }
+.project-box:hover{ transform:translateY(-15px) scale(1.03); }
+.project-box h3{ color:#ff5aa5; }
 
 /* ===== CONTACT ===== */
-.contact-section{
-    padding:80px 20px;
-    text-align:center;
-}
-
-.contact-box{
-    max-width:600px;
-    margin:auto;
-    background:white;
-    padding:40px;
-    border-radius:15px;
-    box-shadow:0 10px 20px rgba(0,0,0,0.1);
-    transition:0.4s;
-}
-
-.contact-box h3{
-    color:#ff5aa5;
-    margin-bottom:25px;
-    font-size:28px;
-}
-
-.contact-box p{
-    font-size:18px;
-    margin:20px 0;
-    line-height:1.6;
-}
+.contact-section{ padding:80px 20px; text-align:center; }
+.contact-box{ max-width:600px; margin:auto; background:white; padding:40px; border-radius:15px; box-shadow:0 10px 20px rgba(0,0,0,0.1); transition:0.4s; }
+.contact-box h3{ color:#ff5aa5; margin-bottom:25px; font-size:28px; }
+.contact-box p{ font-size:18px; margin:20px 0; line-height:1.6; }
 
 /* ===== BOUTON RETOUR HAUT ===== */
-.top-btn{
-    position:fixed;
-    bottom:20px;
-    right:20px;
-    background:#ff5aa5;
-    color:white;
-    border:none;
-    padding:15px 18px;
-    border-radius:50%;
-    font-size:20px;
-    cursor:pointer;
-    box-shadow:0 5px 15px rgba(0,0,0,0.2);
-    transition:0.3s;
-}
-
-.top-btn:hover{
-    transform:scale(1.1);
-}
+.top-btn{ position:fixed; bottom:20px; right:20px; background:#ff5aa5; color:white; border:none; padding:15px 18px; border-radius:50%; font-size:20px; cursor:pointer; box-shadow:0 5px 15px rgba(0,0,0,0.2); transition:0.3s; }
+.top-btn:hover{ transform:scale(1.1); }
 
 /* ===== FOOTER ===== */
-footer{
-    background-color:#222;
-    color:white;
-    text-align:center;
-    padding:20px;
-    margin-top:50px;
-}
+footer{ background-color:#222; color:white; text-align:center; padding:20px; margin-top:50px; }
 
 /* ===== RESPONSIVE ===== */
-@media screen and (max-width:768px){
-    .hero h2{
-        font-size:32px;
-    }
-    .cards,
-    .project-list{
-        flex-direction:column;
-        align-items:center;
-    }
-}
-
+@media screen and (max-width:768px){ .hero h2{ font-size:32px; } .cards, .project-list{ flex-direction:column; align-items:center; } }
 
 /* ===== DESIGN ET STYLE DES POPUPS ET FILTRES DE LA CARTE ===== */
-:root {
-  --vert-fonce:   #14532d;
-  --vert-moyen:   #16a34a;
-  --vert-clair:   #bbf7d0;
-  --gris-fond:    #f3f4f6;
-  --gris-bord:    #e5e7eb;
-  --gris-texte:   #6b7280;
-  --noir:         #111827;
-  --blanc:        #ffffff;
-  --rayon:        12px;
-  --ombre:        0 4px 15px rgba(0,0,0,0.08);
-}
+:root { --vert-fonce: #14532d; --vert-moyen: #16a34a; --vert-clair: #bbf7d0; --gris-fond: #f3f4f6; --gris-bord: #e5e7eb; --gris-texte: #6b7280; --noir: #111827; --blanc: #ffffff; --rayon: 12px; --ombre: 0 4px 15px rgba(0,0,0,0.08); }
+#filtres-panel { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; padding: 1.2rem; background: var(--blanc); border-bottom: 1px solid var(--gris-bord); border-radius: 15px 15px 0 0; max-width: 950px; margin: 0 auto; }
+.filtre-groupe { display: flex; align-items: center; gap: 0.5rem; }
+.filtre-groupe label { font-size: 0.85rem; font-weight: 600; color: var(--gris-texte); }
+.filtre-groupe select { font-size: 0.85rem; padding: 0.4rem 0.8rem; border: 1px solid var(--gris-bord); border-radius: 8px; background: var(--blanc); cursor: pointer; outline: none; }
+#map-status { margin-top: 10px; font-size: 0.85rem; font-weight: 500; color: var(--vert-fonce); }
 
-#filtres-panel {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1.5rem;
-  padding: 1.2rem;
-  background: var(--blanc);
-  border-bottom: 1px solid var(--gris-bord);
-  border-radius: 15px 15px 0 0;
-  max-width: 950px;
-  margin: 0 auto;
-}
+.legende-carte { background: var(--blanc); border-radius: 8px; box-shadow: var(--ombre); padding: 0.75rem 1rem; font-size: 0.78rem; line-height: 1.6; color: var(--noir); }
+.legende-carte h4 { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; color: var(--gris-texte); margin-bottom: 0.4rem; }
+.legende-item { display: flex; align-items: center; gap: 0.5rem; }
+.legende-item span { display: inline-block; width: 14px; height: 14px; border-radius: 3px; }
 
-.filtre-groupe {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
+.popup-pcaet .leaflet-popup-content-wrapper { border-radius: var(--rayon); box-shadow: 0 10px 30px rgba(0,0,0,0.18); padding: 0; overflow: hidden; }
+.popup-pcaet .leaflet-popup-content { margin: 0; width: 380px !important; }
+.popup-container { padding: 1.2rem; color: var(--noir); text-align: left; }
+.popup-header-block { border-bottom: 2px solid var(--vert-moyen); padding-bottom: 0.5rem; margin-bottom: 0.8rem; }
+.popup-commune { font-size: 1.3rem; font-weight: 800; color: var(--vert-fonce); text-transform: uppercase; }
+.popup-quartier { font-size: 0.85rem; color: #ff7b00; font-weight: 600; margin-top: 0.1rem; }
 
-.filtre-groupe label {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--gris-texte);
-}
+.fiche-title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; margin-bottom: 0.6rem; }
+.projet-nom { font-size: 1.1rem; font-weight: 700; color: var(--noir); line-height: 1.3; }
+.statut { font-size: 0.7rem; font-weight: 700; padding: 0.25rem 0.6rem; border-radius: 999px; text-transform: uppercase; white-space: nowrap; }
+.statut-en-cours { background: #dbeafe; color: #1d4ed8; }
+.statut-termine { background: #dcfce7; color: #15803d; }
+.statut-planifie { background: #fef9c3; color: #854d0e; }
 
-.filtre-groupe select {
-  font-size: 0.85rem;
-  padding: 0.4rem 0.8rem;
-  border: 1px solid var(--gris-bord);
-  border-radius: 8px;
-  background: var(--blanc);
-  cursor: pointer;
-  outline: none;
-}
+.axe-pcaet-tag { display: inline-block; font-size: 0.75rem; background: #fff7ed; color: #c2410c; border: 1px solid #ffedd5; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 600; margin-bottom: 0.6rem; }
+.projet-description { font-size: 0.88rem; color: #374151; line-height: 1.4; margin-bottom: 0.8rem; background: #f9fafb; padding: 0.6rem; border-radius: 6px; border-left: 3px solid var(--vert-moyen); }
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; background: #fafafa; padding: 0.6rem; border-radius: 6px; margin-bottom: 0.8rem; font-size: 0.8rem; border: 1px solid var(--gris-bord); }
+.info-item b { color: var(--gris-texte); font-size: 0.72rem; text-transform: uppercase; display: block; margin-bottom: 0.1rem; }
+.cobenefit-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-bottom: 0.8rem; }
+.cobenefit-tag { font-size: 0.72rem; background: #f0fdf4; color: var(--vert-fonce); border: 1px solid #bbf7d0; border-radius: 999px; padding: 0.15rem 0.4rem; }
+.anecdote-bloc { background: #fefce8; border-left: 3px solid #eab308; padding: 0.6rem 0.8rem; border-radius: 0 6px 6px 0; font-size: 0.8rem; margin-top: 0.6rem; }
 
-#map-status {
-  margin-top: 10px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--vert-fonce);
-}
-
-/* --- Style de la légende --- */
-.legende-carte {
-  background: var(--blanc);
-  border-radius: 8px;
-  box-shadow: var(--ombre);
-  padding: 0.75rem 1rem;
-  font-size: 0.78rem;
-  line-height: 1.6;
-  color: var(--noir);
-}
-
-.legende-carte h4 {
-  font-size: 0.72rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  color: var(--gris-texte);
-  margin-bottom: 0.4rem;
-}
-
-.legende-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.legende-item span {
-  display: inline-block;
-  width: 14px;
-  height: 14px;
-  border-radius: 3px;
-}
-
-/* --- Style de la boîte Popup Leaflet --- */
-.popup-pcaet .leaflet-popup-content-wrapper {
-  border-radius: var(--rayon);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.18);
-  padding: 0;
-  overflow: hidden;
-}
-
-.popup-pcaet .leaflet-popup-content {
-  margin: 0;
-  width: 380px !important;
-}
-
-.popup-container {
-  padding: 1.2rem;
-  color: var(--noir);
-  text-align: left;
-}
-
-.popup-header-block {
-  border-bottom: 2px solid var(--vert-moyen);
-  padding-bottom: 0.5rem;
-  margin-bottom: 0.8rem;
-}
-
-.popup-commune {
-  font-size: 1.3rem;
-  font-weight: 800;
-  color: var(--vert-fonce);
-  text-transform: uppercase;
-}
-
-.popup-quartier {
-  font-size: 0.85rem;
-  color: #ff7b00;
-  font-weight: 600;
-  margin-top: 0.1rem;
-}
-
-/* --- Contenu Interne de la Fiche --- */
-.fiche-title-row {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 0.5rem;
-  margin-bottom: 0.6rem;
-}
-
-.projet-nom {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--noir);
-  line-height: 1.3;
-}
-
-.statut {
-  font-size: 0.7rem;
-  font-weight: 700;
-  padding: 0.25rem 0.6rem;
-  border-radius: 999px;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-.statut-en-cours  { background: #dbeafe; color: #1d4ed8; }
-.statut-termine   { background: #dcfce7; color: #15803d; }
-.statut-planifie  { background: #fef9c3; color: #854d0e; }
-
-.axe-pcaet-tag {
-  display: inline-block;
-  font-size: 0.75rem;
-  background: #fff7ed;
-  color: #c2410c;
-  border: 1px solid #ffedd5;
-  padding: 0.2rem 0.5rem;
-  border-radius: 4px;
-  font-weight: 600;
-  margin-bottom: 0.6rem;
-}
-
-.projet-description {
-  font-size: 0.88rem;
-  color: #374151;
-  line-height: 1.4;
-  margin-bottom: 0.8rem;
-  background: #f9fafb;
-  padding: 0.6rem;
-  border-radius: 6px;
-  border-left: 3px solid var(--vert-moyen);
-}
-
-/* Grille d'informations techniques et budgétaires */
-.info-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.6rem;
-  background: #fafafa;
-  padding: 0.6rem;
-  border-radius: 6px;
-  margin-bottom: 0.8rem;
-  font-size: 0.8rem;
-  border: 1px solid var(--gris-bord);
-}
-
-.info-item b {
-  color: var(--gris-texte);
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  display: block;
-  margin-bottom: 0.1rem;
-}
-
-/* Badges Co-bénéfices */
-.cobenefit-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.3rem;
-  margin-bottom: 0.8rem;
-}
-
-.cobenefit-tag {
-  font-size: 0.72rem;
-  background: #f0fdf4;
-  color: var(--vert-fonce);
-  border: 1px solid #bbf7d0;
-  border-radius: 999px;
-  padding: 0.15rem 0.4rem;
-}
-
-/* Bloc Anecdotes */
-.anecdote-bloc {
-  background: #fefce8;
-  border-left: 3px solid #eab308;
-  padding: 0.6rem 0.8rem;
-  border-radius: 0 6px 6px 0;
-  font-size: 0.8rem;
-  margin-top: 0.6rem;
-}
-
-@media (max-width: 600px) {
-  .popup-pcaet .leaflet-popup-content { width: 290px !important; }
-  .info-grid { grid-template-columns: 1fr; }
-}
-
+@media (max-width: 600px) { .popup-pcaet .leaflet-popup-content { width: 290px !important; } .info-grid { grid-template-columns: 1fr; } }
 </style>
-
 </head>
 
 <body>
-
-<header class="fade">
-    <h1>Plan Climat Métropole</h1>
-</header>
+<header class="fade"><h1>Plan Climat Métropole</h1></header>
 
 <nav class="top-menu">
-    <a href="#" class="active">Accueil</a>
-    <span>|</span>
-    <a href="https://jeparticipe.metropole.toulouse.fr/" target="_blank">Je participe</a>
-    <span>|</span>
-    <a href="#projets">Projets</a>
-    <span>|</span>
+    <a href="#" class="active">Accueil</a><span>|</span>
+    <a href="https://jeparticipe.metropole.toulouse.fr/" target="_blank">Je participe</a><span>|</span>
+    <a href="#projets">Projets</a><span>|</span>
     <a href="#contact">Contact</a>
     <button class="dark-btn" onclick="toggleDarkMode()">🌙</button>
 </nav>
@@ -575,23 +138,13 @@ footer{
 </section>
 
 <section class="cards fade">
-    <div class="card">
-        <h3>🌳 Projet vert</h3>
-        <p>Plantation d’arbres et développement des îlots de fraîcheur urbains.</p>
-    </div>
-    <div class="card">
-        <h3>🚲 Mobilité</h3>
-        <p>Déploiement des infrastructures cyclables et transports doux.</p>
-    </div>
-    <div class="card">
-        <h3>☀️ Énergie</h3>
-        <p>Soutien aux énergies renouvelables et rénovations thermiques.</p>
-    </div>
+    <div class="card"><h3>🌳 Projet vert</h3><p>Plantation d’arbres et développement des îlots de fraîcheur urbains.</p></div>
+    <div class="card"><h3>🚲 Mobilité</h3><p>Déploiement des infrastructures cyclables et transports doux.</p></div>
+    <div class="card"><h3>☀️ Énergie</h3><p>Soutien aux énergies renouvelables et rénovations thermiques.</p></div>
 </section>
 
 <section id="carte" class="map-section fade">
     <h2>Carte interactive de la métropole</h2>
-   
     <div id="filtres-panel">
       <div class="filtre-groupe">
         <label for="filtre-concertation">Participation citoyenne :</label>
@@ -602,7 +155,6 @@ footer{
           <option value="Co-construction">Co-construction</option>
         </select>
       </div>
-
       <div class="filtre-groupe">
         <label for="filtre-cobenefit">Co-bénéfice principal :</label>
         <select id="filtre-cobenefit">
@@ -615,7 +167,6 @@ footer{
         </select>
       </div>
     </div>
-
     <div id="map" style="height:650px; max-width:950px; margin:0 auto; border-radius:0 0 15px 15px; box-shadow:0 10px 20px rgba(0,0,0,0.1);"></div>
     <p id="map-status">Initialisation de la carte...</p>
 </section>
@@ -623,18 +174,9 @@ footer{
 <section id="projets" class="projects-section fade">
     <h2>Les projets phares</h2>
     <div class="project-list">
-        <div class="project-box">
-            <h3>🌱 Projet 1</h3>
-            <p>Création d’espaces verts et végétalisation urbaine.</p>
-        </div>
-        <div class="project-box">
-            <h3>🚆 Projet 2</h3>
-            <p>Développement des liaisons douces intercommunales.</p>
-        </div>
-        <div class="project-box">
-            <h3>🔋 Projet 3</h3>
-            <p>Installation de centrales photovoltaïques en toiture.</p>
-        </div>
+        <div class="project-box"><h3>🌱 Projet 1</h3><p>Création d’espaces verts et végétalisation urbaine.</p></div>
+        <div class="project-box"><h3>🚆 Projet 2</h3><p>Développement des liaisons douces intercommunales.</p></div>
+        <div class="project-box"><h3>🔋 Projet 3</h3><p>Installation de centrales photovoltaïques en toiture.</p></div>
     </div>
 </section>
 
@@ -649,112 +191,27 @@ footer{
     </div>
 </section>
 
-<footer>
-    © 2026 - Métropole Durable & Résiliente
-</footer>
-
+<footer>© 2026 - Métropole Durable & Résiliente</footer>
 <button class="top-btn" onclick="scrollToTop()">↑</button>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 
+<script src="map.js"></script>
+
 <script>
-
 /* ===== FONCTIONNALITÉS GLOBALES PAGE ===== */
-function toggleDarkMode(){
-    document.body.classList.toggle("dark-mode");
-}
-
-function scrollToTop(){
-    window.scrollTo({ top:0, behavior:"smooth" });
-}
-
+function toggleDarkMode(){ document.body.classList.toggle("dark-mode"); }
+function scrollToTop(){ window.scrollTo({ top:0, behavior:"smooth" }); }
 const faders = document.querySelectorAll('.fade');
 window.addEventListener('scroll', () => {
     faders.forEach(fade => {
         const top = fade.getBoundingClientRect().top;
-        if(top < window.innerHeight - 100){
-            fade.classList.add('visible');
-        }
+        if(top < window.innerHeight - 100){ fade.classList.add('visible'); }
     });
 });
 window.dispatchEvent(new Event('scroll'));
-
-
-/* ===== LOGIQUE INTERACTIVE DE LA CARTE (MODIFIÉE POUR CSV) ===== */
-document.addEventListener("DOMContentLoaded", function () {
- 
-  // Base de la carte sur Toulouse
-  const map = L.map('map').setView([43.6045, 1.444], 11);
-
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-    subdomains: 'abcd',
-    maxZoom: 19
-  }).addTo(map);
-
-  let geojsonLayer;
-  let markersLayer = L.layerGroup().addTo(map);
-
-  // MODIFICATION 1 : La liste des projets devient un tableau vide en attendant d'être alimenté par le CSV
-  let projetsListe = [];
-
-  const filterConcertation = document.getElementById("filtre-concertation");
-  const filterCobenefit = document.getElementById("filtre-cobenefit");
-  const mapStatus = document.getElementById("map-status");
-
-  // MODIFICATION 2 : Fonction dédiée au chargement et au traitement du fichier CSV
-  function chargerDonneesCSV() {
-    return fetch("projets.csv") // Assurez-vous que votre fichier s'appelle bien projets.csv
-      .then(res => {
-        if (!res.ok) throw new Error("Erreur de chargement du fichier CSV.");
-        return res.text();
-      })
-      .then(csvText => {
-        return new Promise((resolve, reject) => {
-          Papa.parse(csvText, {
-            header: true,          // Permet d'associer la première ligne aux clés (ex: projet.nomProjet)
-            skipEmptyLines: true,  // Ignore les lignes vides accidentelles
-            complete: function(results) {
-              
-              // Nettoyage et formatage des données brutes reçues du CSV
-              projetsListe = results.data.map(projet => {
-                
-                // Traitement des coordonnées : "43.5991, 1.4335" -> [43.5991, 1.4335]
-                if (projet.coordonnees) {
-                  projet.coordonnees = projet.coordonnees.split(',').map(coord => parseFloat(coord.trim()));
-                } else {
-                  projet.coordonnees = [43.6045, 1.444]; // Fallback coordonnées par défaut (Toulouse centre) si vide
-                }
-
-                // Traitement de la chaine Co-bénéfices : "Énergie; Lien social" -> ["Énergie", "Lien social"]
-                if (projet.coBenefices) {
-                  projet.coBenefices = projet.coBenefices.split(';').map(cb => cb.trim());
-                } else {
-                  projet.coBenefices = [];
-                }
-
-                return projet;
-              });
-              resolve();
-            },
-            error: function(err) {
-              reject(err);
-            }
-          });
-        });
-      });
-  }
-
-  // Vérification des filtres
-  function evaluerFiltres(projet) {
-    const concertationActive = filterConcertation.value;
-    const cobenefitActif = filterCobenefit.value;
-
-    const matchConcert = (concertationActive === "all" ||
-                         projet.niveauParticipation.toLowerCase().includes(concertationActive.toLowerCase()));
-                         
-    const matchCobenef = (cobenefitActif === "all" ||
-                         projet.coBenefices.some(cb => cb.toLowerCase().trim().includes(cobenefitActif.
+</script>
+</body>
+</html>
